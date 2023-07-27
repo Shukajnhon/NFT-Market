@@ -13,6 +13,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {useCurrentUserStore, useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
+import {BASE_URL} from 'store/url';
 
 const Header = () => {
   const [tokenUser, setToken] = useState(null);
@@ -32,7 +33,7 @@ const Header = () => {
     console.log('token logout: ', token);
     // e.preventDefault();
     axios
-      .post(`http://localhost:8080/api/logout/${token}`)
+      .post(`${BASE_URL}/api/logout/${token}`)
       .then(function (response) {
         console.log('phan hoi thanh cong logout: ', response.data.data);
         // const cookies = new Cookies();
@@ -53,9 +54,7 @@ const Header = () => {
     function getUser() {
       try {
         function getTokenByUser() {
-          return axios.get(
-            'http://localhost:8080/api/session-address-wallet/' + token
-          );
+          return axios.get('${BASE_URL}/api/session-address-wallet/' + token);
         }
         Promise.all([getTokenByUser()]).then((res) => {
           // console.log("what is res: ",res);

@@ -17,6 +17,7 @@ import axios from 'axios';
 import {useCurrentUserStore} from 'store/store';
 import {Card} from 'components/Card';
 import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 
 const auctionData = [
   {
@@ -78,8 +79,7 @@ const auctionData = [
 ];
 
 const NftPage = () => {
-  let TIME = 2000;
-  const [count, setCount] = useState(TIME); // seconds
+  const [count, setCount] = useState(); // seconds
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -125,7 +125,7 @@ const NftPage = () => {
     // getListNFTbyId
     function getListNFTById() {
       axios
-        .get(`http://localhost:8080/nfts/created-nft/${dataNft.account_id}`)
+        .get(`${BASE_URL}/nfts/created-nft/${dataNft.account_id}`)
         // .get(`http://localhost:8080/nfts/created-nft/${13}`)
         .then((res) => {
           console.log(res.data);
@@ -146,7 +146,7 @@ const NftPage = () => {
       try {
         if (dataNft.nft_id) {
           const response = await axios.get(
-            `http://localhost:8080/nfts/date-start-end-bid/${dataNft.nft_id}`
+            `${BASE_URL}/nfts/date-start-end-bid/${dataNft.nft_id}`
           );
           // console.log(response);
           const data = response.data;
@@ -172,7 +172,7 @@ const NftPage = () => {
       try {
         if (dataNft.nft_id) {
           const response = await axios.get(
-            `http://localhost:8080/transaction/history/${dataNft.nft_id}`
+            `${BASE_URL}/transaction/history/${dataNft.nft_id}`
           );
           // console.log(response);
           const data = response.data;
@@ -202,7 +202,7 @@ const NftPage = () => {
   // handleClick
   const handleClick = (nftID) => {
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftID}`)
       .then((res) => {
         navigate(`/nft-detail-page/${nftID}`, {
           state: {dataNft: res.data[0]},
@@ -229,7 +229,7 @@ const NftPage = () => {
           formData.append('nft_id', dataNft.nft_id);
           try {
             axios.post(
-              `http://localhost:8080/transaction/complete-transaction`,
+              `${BASE_URL}/transaction/complete-transaction`,
               formData
             );
             console.log('Transaction success');
@@ -271,7 +271,7 @@ const NftPage = () => {
     formData.append('highest_bid', inputValue);
     async function postTransactionBid() {
       axios
-        .post(`http://localhost:8080/transaction/create`, formData)
+        .post(`${BASE_URL}/transaction/create`, formData)
         .then(function (response) {
           console.log(response);
         })

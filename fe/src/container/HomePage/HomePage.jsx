@@ -876,7 +876,7 @@ const HomePage = () => {
           return axios.get(`${BASE_URL}/api/home/top-creator`);
         }
         function getNewTrending() {
-          return axios.get('${BASE_URL}/api/home/trending-nft');
+          return axios.get(`${BASE_URL}/api/home/trending-nft`);
         }
         Promise.all([
           getTopCreator(),
@@ -889,6 +889,7 @@ const HomePage = () => {
           const overallData = res[1].data[0];
           const trendingCollectionData = res[2].data;
           const newTrendingData = res[3].data;
+          console.log('trendingCollectionData: ', trendingCollectionData);
 
           setTopCreator(topCreatorData);
           setOverall(overallData);

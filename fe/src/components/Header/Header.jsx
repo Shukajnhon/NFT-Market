@@ -54,7 +54,7 @@ const Header = () => {
     function getUser() {
       try {
         function getTokenByUser() {
-          return axios.get('${BASE_URL}/api/session-address-wallet/' + token);
+          return axios.get(`${BASE_URL}/api/session-address-wallet/` + token);
         }
         Promise.all([getTokenByUser()]).then((res) => {
           // console.log("what is res: ",res);

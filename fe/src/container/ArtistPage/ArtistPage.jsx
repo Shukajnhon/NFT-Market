@@ -1,23 +1,24 @@
-import styled from "styled-components";
-import { colors } from "../../Global";
-import { PrimaryLayout } from "components/Layout";
-import { Button } from "components/Button";
-import { Card } from "components/Card";
+import styled from 'styled-components';
+import {colors} from '../../Global';
+import {PrimaryLayout} from 'components/Layout';
+import {Button} from 'components/Button';
+import {Card} from 'components/Card';
 
-import globe from "../../assets/Artist/Links/Globe.svg";
-import discord from "../../assets/Artist/Links/DiscordLogo.svg";
-import youtube from "../../assets/Artist/Links/YoutubeLogo.svg";
-import twitter from "../../assets/Artist/Links/TwitterLogo.svg";
-import insta from "../../assets/Artist/Links/InstagramLogo.svg";
-import background1 from "../../assets/Artist/background_img.png";
-import avatar1 from "../../assets/Artist/avatar1.png";
-import button1 from "../../assets/Artist/Button1.svg";
-import button2 from "../../assets/Artist/Button2.svg";
-import cate5a from "../../assets/HomePage/Categories/cate5a.png";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
+import globe from '../../assets/Artist/Links/Globe.svg';
+import discord from '../../assets/Artist/Links/DiscordLogo.svg';
+import youtube from '../../assets/Artist/Links/YoutubeLogo.svg';
+import twitter from '../../assets/Artist/Links/TwitterLogo.svg';
+import insta from '../../assets/Artist/Links/InstagramLogo.svg';
+import background1 from '../../assets/Artist/background_img.png';
+import avatar1 from '../../assets/Artist/avatar1.png';
+import button1 from '../../assets/Artist/Button1.svg';
+import button2 from '../../assets/Artist/Button2.svg';
+import cate5a from '../../assets/HomePage/Categories/cate5a.png';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 
 const CreatedArtistData = [
   {
@@ -377,8 +378,8 @@ const ArtistStyled = styled.div`
 
 const ArtistPage = () => {
   const location = useLocation();
-  const { dataArtist } = location.state;
-  const [selectedClass, setSelectedClass] = useState("created");
+  const {dataArtist} = location.state;
+  const [selectedClass, setSelectedClass] = useState('created');
   const [listDataNFT, setListDataNFT] = useState();
   const [dataNFTID, setDataNFTID] = useState();
   const navigate = useNavigate();
@@ -388,7 +389,7 @@ const ArtistPage = () => {
   useEffect(() => {
     function getListNFTById() {
       axios
-        .get(`http://localhost:8080/nfts/created-nft/${dataArtist.account_id}`)
+        .get(`${BASE_URL}/nfts/created-nft/${dataArtist.account_id}`)
         .then((res) => {
           console.log(res.data);
           setListDataNFT(res.data);
@@ -414,10 +415,10 @@ const ArtistPage = () => {
 
   const handleClick = (nftID) => {
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftID}`)
       .then((res) => {
         navigate(`/nft-detail-page/${nftID}`, {
-          state: { dataNft: res.data[0] },
+          state: {dataNft: res.data[0]},
         });
         window.scrollTo(0, 0);
       })

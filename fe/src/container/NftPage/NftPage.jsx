@@ -364,7 +364,7 @@ const NftPage = () => {
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
-          <img src={dataNft.image} alt="" className="banner" />
+          <img src={dataNft.image || banner} alt="" className="banner" />
           <div className="container nft-page-content">
             <div className="content-left">
               <div className="content-left-wrap">
@@ -378,7 +378,7 @@ const NftPage = () => {
                   <div className="content-created-item">
                     <div className="create-by-title">Created By</div>
                     <div className="created-detail">
-                      <img src={dataNft.avatar} alt="" />
+                      <img src={dataNft.avatar || avatar} alt="" />
                       <span className="create-by">
                         {dataNft.username || currentUser.username || 'Orbitian'}
                       </span>

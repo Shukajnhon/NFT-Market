@@ -17,14 +17,15 @@ const Ranking = ({title}) => {
   const [dataThisWeekTopCreator, setDataThisWeekTopCreator] = useState();
   const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
   const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
-  const [creatorID, setCreatorID] = useState();
+  // const [creatorID, setCreatorID] = useState();
 
   const light = useSettingsStore((state) => state.light);
 
   const [totalPage, setTotalPage] = useState();
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
-  console.log('creatorID: ' + creatorID);
+
+  // console.log('creatorID: ' + creatorID);
 
   // console.log('data: ', {
   //   dataTodayTopCreator: dataTodayTopCreator,
@@ -193,22 +194,22 @@ const Ranking = ({title}) => {
                       {/* Body */}
                       <tbody className="table-body">
                         {/* today */}
-                        {selectedClass === 'alltime' &&
+                        {selectedClass === 'today' &&
                           dataTodayTopCreator &&
                           dataTodayTopCreator.length > 0 &&
                           dataTodayTopCreator.map((item, index) => {
                             return (
-                              <Fragment
-                                key={index}
-                                onClick={setCreatorID(item.account_id)}
-                              >
+                              <Fragment key={index}>
                                 <DataTableRanking
+                                  onclick={() => handleClick(item.account_id)}
+                                  id={item.account_id}
                                   index={index + 1}
                                   src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
                                   volume={item.volume}
+                                  // onClick={setCreatorID(item.account_id)}
                                 ></DataTableRanking>
                               </Fragment>
                             );
@@ -260,6 +261,7 @@ const Ranking = ({title}) => {
                             return (
                               <Fragment key={index}>
                                 <DataTableRanking
+                                  onclick={() => handleClick(item.account_id)}
                                   id={item.account_id}
                                   index={index + 1}
                                   src={item.avatar}
@@ -267,7 +269,6 @@ const Ranking = ({title}) => {
                                   change={item.change}
                                   sold={item.nfts_sold}
                                   volume={item.volume}
-                                  onclick={() => handleClick(item.account_id)}
                                 ></DataTableRanking>
                               </Fragment>
                             );
@@ -731,7 +732,7 @@ const DataTableRanking = ({
 }) => {
   return (
     <>
-      <tr className="table-row-body" onClick={onclick}>
+      <tr className="table-row-body" data_id={id} onClick={onclick}>
         <td className="table-body-data">
           <span className="body-data-stt">{index || 1}</span>
         </td>

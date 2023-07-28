@@ -21,34 +21,29 @@ const Header = () => {
   const token = Cookies.get('token');
   // console.log('hello token: ', token);
   const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
+  const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   // console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
+  const {toggleDarkMode} = useSettingsStore();
+  const light = useSettingsStore((state) => state.light);
 
   // console.log('tokenUser:', tokenUser);
 
-  const handleLogoutForm = (e) => {
-    console.log('token logout: ', token);
-    // e.preventDefault();
-    axios
-      .post(`${BASE_URL}/api/logout/${token}`)
-      .then(function (response) {
-        console.log('phan hoi thanh cong logout: ', response.data.data);
-        // const cookies = new Cookies();
-        // cookies.set("token logout", response.data.data);
-        // localStorage.removeItem('metamask-address');
-        // Cookies.remove('token');
-        // navigate('/');
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
-    localStorage.removeItem('metamask-address');
-    Cookies.remove('token');
-    navigate('/');
-  };
+  let address_wallet = '';
+  if (tokenUser === '' || tokenUser === null) {
+    address_wallet = '';
+  } else {
+    address_wallet =
+      tokenUser[0].address_wallet.substring(0, 3) +
+      '...' +
+      tokenUser[0].address_wallet.substring(
+        tokenUser[0].address_wallet.length - 3
+      );
+  }
 
   useEffect(() => {
     function getUser() {
@@ -70,21 +65,6 @@ const Header = () => {
     }
     getUser();
   }, []);
-
-  let address_wallet = '';
-  if (tokenUser === '' || tokenUser === null) {
-    address_wallet = '';
-  } else {
-    address_wallet =
-      tokenUser[0].address_wallet.substring(0, 3) +
-      '...' +
-      tokenUser[0].address_wallet.substring(
-        tokenUser[0].address_wallet.length - 3
-      );
-  }
-
-  const {toggleDarkMode} = useSettingsStore();
-  const light = useSettingsStore((state) => state.light);
 
   useEffect(() => {
     if (light) {
@@ -118,14 +98,32 @@ const Header = () => {
     barIcon.style.transform = 'translateX(100%)';
   };
 
-  const navigate = useNavigate();
-
   // Logout Metamask
+  const handleLogoutForm = (e) => {
+    console.log('token logout: ', token);
+    // e.preventDefault();
+    axios
+      .post(`${BASE_URL}/api/logout/${token}`)
+      .then(function (response) {
+        console.log('phan hoi thanh cong logout: ', response.data.data);
+        // const cookies = new Cookies();
+        // cookies.set("token logout", response.data.data);
+        // localStorage.removeItem('metamask-address');
+        // Cookies.remove('token');
+        // navigate('/');
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+    localStorage.removeItem('metamask-address');
+    Cookies.remove('token');
+    navigate('/');
+  };
 
   return (
     <HeaderStyled>
-      <header className="header">
-        <div className="header-wrapper">
+      <header className={`header`}>
+        <div className={`header-wrapper`}>
           <div className="header-left">
             <div onClick={() => navigate('/')}>
               <LogoItem light={light}></LogoItem>
@@ -295,9 +293,15 @@ const NavMobileStyled = styled.div`
 
 // Header Style
 const HeaderStyled = styled.div`
+  padding-bottom: 100px;
   .header {
     background-color: ${colors.backgroundColor2};
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
   .header-wrapper {
     margin: 0 auto;
@@ -307,6 +311,7 @@ const HeaderStyled = styled.div`
     max-width: 1182px;
     height: 100px;
   }
+
   // header left
 
   // header right

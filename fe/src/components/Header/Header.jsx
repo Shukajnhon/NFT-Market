@@ -21,10 +21,11 @@ const Header = () => {
   const token = Cookies.get('token');
   // console.log('hello token: ', token);
   const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
-  const [scrolled, setScrolled] = useState(false);
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
+  // const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
-  // console.log('currentUser: ', currentUser);
+  console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
@@ -119,6 +120,8 @@ const Header = () => {
     Cookies.remove('token');
     navigate('/');
   };
+  if (!currentUser) return null;
+  const {account_id, username} = currentUser;
 
   return (
     <HeaderStyled>
@@ -164,6 +167,14 @@ const Header = () => {
                   <div className="sub-header">
                     <ul className="sub-header-list">
                       <li className="sub-header-items">
+                        <a
+                          href={`/artist/${account_id}`}
+                          className="sub-header-item-link"
+                        >
+                          <span>{username}</span>
+                        </a>
+                      </li>
+                      <li className="sub-header-items">
                         <a href="/create-nft" className="sub-header-item-link">
                           <span>Create NFT</span>
                         </a>
@@ -196,6 +207,14 @@ const Header = () => {
               <NavMobileStyled className="nav-mobile" light={light}>
                 <div className="close-btn" onClick={handleClickCloseBtn}>
                   <Close></Close>
+                </div>
+                <div className="nav-mobile-item">
+                  <a
+                    href={`/artist/${account_id}`}
+                    className="nav-mobile-item-link"
+                  >
+                    <span>{username}</span>
+                  </a>
                 </div>
 
                 <div className="nav-mobile-item">

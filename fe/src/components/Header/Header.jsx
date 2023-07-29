@@ -120,13 +120,11 @@ const Header = () => {
     Cookies.remove('token');
     navigate('/');
   };
-  if (!currentUser) return null;
-  const {account_id, username} = currentUser;
 
   return (
     <HeaderStyled>
-      <header className={`header`}>
-        <div className={`header-wrapper`}>
+      <header className="header">
+        <div className="header-wrapper">
           <div className="header-left">
             <div onClick={() => navigate('/')}>
               <LogoItem light={light}></LogoItem>
@@ -166,14 +164,16 @@ const Header = () => {
                 {showSubHeader && token && (
                   <div className="sub-header">
                     <ul className="sub-header-list">
-                      <li className="sub-header-items">
-                        <a
-                          href={`/artist/${account_id}`}
-                          className="sub-header-item-link"
-                        >
-                          <span>{username}</span>
-                        </a>
-                      </li>
+                      {currentUser?.username && (
+                        <li className="sub-header-items">
+                          <a
+                            href={`/artist/${currentUser?.account_id}`}
+                            className="sub-header-item-link"
+                          >
+                            <span>{currentUser?.username}</span>
+                          </a>
+                        </li>
+                      )}
                       <li className="sub-header-items">
                         <a href="/create-nft" className="sub-header-item-link">
                           <span>Create NFT</span>
@@ -208,14 +208,16 @@ const Header = () => {
                 <div className="close-btn" onClick={handleClickCloseBtn}>
                   <Close></Close>
                 </div>
-                <div className="nav-mobile-item">
-                  <a
-                    href={`/artist/${account_id}`}
-                    className="nav-mobile-item-link"
-                  >
-                    <span>{username}</span>
-                  </a>
-                </div>
+                {currentUser?.username && (
+                  <div className="nav-mobile-item">
+                    <a
+                      href={`/artist/${currentUser?.account_id}`}
+                      className="nav-mobile-item-link"
+                    >
+                      <span>{currentUser?.username}</span>
+                    </a>
+                  </div>
+                )}
 
                 <div className="nav-mobile-item">
                   <a href="/create-nft" className="nav-mobile-item-link">

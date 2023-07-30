@@ -184,7 +184,7 @@ const NftPage = () => {
       }
     }
     historyTransaction();
-  }, [dataNft.nft_id]);
+  }, [dataNft.nft_id, count]);
 
   // handleClickActiveClass
   const handleClickActiveClass = (activeClass) => {

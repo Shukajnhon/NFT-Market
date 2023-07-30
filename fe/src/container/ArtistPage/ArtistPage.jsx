@@ -438,7 +438,7 @@ const ArtistPage = () => {
       });
   };
 
-  if (!currentUser) return null;
+  // if (!currentUser) return null;
   return (
     <PrimaryLayout>
       <ArtistStyled>

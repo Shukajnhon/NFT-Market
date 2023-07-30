@@ -2,7 +2,7 @@ import {PrimaryLayout} from 'components/Layout';
 import styled from 'styled-components';
 import {colors} from 'Global';
 import {Button} from 'components/Button';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 import profile_image from '../../assets/profile_detail/profile_image.png';
@@ -290,11 +290,13 @@ const CreateNFTPage = () => {
   const navigate = useNavigate();
   const userAddressWallet = useCurrentUserStore((state) => state.currentUser);
   console.log('userAddressWallet:', userAddressWallet.account_id);
+
   const [formValue, setFormValue] = useState({
     nft_name: '',
     description: '',
     price: '',
-    profile_image: document.getElementById('profile_image'),
+    // profile_image: document.getElementById('profile_image'),
+    profile_image: '',
     date_start_bid: '',
     date_end_bid: '',
     account_id: userAddressWallet.account_id,
@@ -310,11 +312,14 @@ const CreateNFTPage = () => {
     const FormData = require('form-data');
     e.preventDefault();
     console.log(formValue);
+    const img = `https://drive.google.com/uc?export=view&id=1B8nZDfctt8VyxTNVbYwzzlVZAn5NsHHz`;
+    // https://drive.google.com/file/d/1B8nZDfctt8VyxTNVbYwzzlVZAn5NsHHz/view
     const formData = new FormData();
     formData.append('nft_name', formValue.nft_name);
     formData.append('description', formValue.description);
     formData.append('price', formValue.price);
-    formData.append('image', formValue.profile_image);
+    // formData.append('image', formValue.profile_image);
+    formData.append('image', img);
     formData.append('date_start_bid', formValue.date_start_bid);
     formData.append('date_end_bid', formValue.date_end_bid);
     formData.append('account_id', userAddressWallet.account_id);

@@ -98,30 +98,10 @@ const NftPage = () => {
   const [selectedClass, setSelectedClass] = useState('created');
   const [listDataNFT, setListDataNFT] = useState();
   const navigate = useNavigate();
-  console.log('dataNft: ', dataNft);
+  // console.log('dataNft: ', dataNft);
   const currentUser = useCurrentUserStore((state) => state.currentUser);
 
   useEffect(() => {
-    // get detail Page
-    // async function getDetail() {
-    //   try {
-    //     const response = await axios.get(
-    //       `http://localhost:8080/nfts/nft-detail-page/${dataNft.nft_id}`
-    //       // `http://localhost:8080/nfts/nft-detail-page/${13}`
-    //     );
-    //     console.log(response.data[0]);
-    //     setDataNftPage(response.data[0]);
-    //     const nftId = response.data[0].nft_id;
-    //     // const nft_name=response.data[0].nft_name;
-    //     // console.log("nft name: ",nft_name);
-    //     console.log('nftId: ', nftId);
-
-    //     setNftId(nftId);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-
     // getListNFTbyId
     function getListNFTById() {
       axios
@@ -139,6 +119,27 @@ const NftPage = () => {
     // getDetail();
   }, []);
 
+  const getHighestBidCompleted = async () => {
+    // console.log('getCompleteTransaction nftID: ', dataNft.nft_id);
+
+    try {
+      if (dataNft.nft_id) {
+        await axios
+          .get(
+            `https://danielaws.tk/group1/transaction/historyHighestBid/${dataNft.nft_id}`
+          )
+          .then((res) => {
+            const data = res.data[0];
+            alert(
+              `the user ${data.username} has won with ${data.highest_bid} ETH`
+            );
+          });
+      }
+    } catch (error) {
+      console.log('getHighestBidCompleted Err: ', error);
+    }
+  };
+
   // get day and time end bid
   useEffect(() => {
     // console.log('nftId endbids', dataNft.nft_id);
@@ -150,14 +151,14 @@ const NftPage = () => {
           );
           // console.log(response);
           const data = response.data;
-          console.log('timeEndBid: ', data);
+          // console.log('timeEndBid: ', data);
           const secondsRemain = Number(data.totalSecondRemain);
           if (secondsRemain <= 86000) {
             setCount(secondsRemain);
           } else {
             setCount(0);
           }
-          console.log('secondsRemain:', secondsRemain);
+          // console.log('secondsRemain:', secondsRemain);
         }
       } catch (error) {
         console.error(error);
@@ -176,7 +177,7 @@ const NftPage = () => {
           );
           // console.log(response);
           const data = response.data;
-          console.log('dataTransaction: ', data);
+          // console.log('dataTransaction: ', data);
           setTransactions(data);
         }
       } catch (error) {
@@ -232,6 +233,7 @@ const NftPage = () => {
               `${BASE_URL}/transaction/complete-transaction`,
               formData
             );
+            getHighestBidCompleted();
             console.log('Transaction success');
           } catch (error) {
             console.log('transaction end bid: ', error);

@@ -25,7 +25,7 @@ const Header = () => {
   // const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
-  console.log('currentUser: ', currentUser);
+  // console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
@@ -56,7 +56,7 @@ const Header = () => {
           // console.log("what is res: ",res);
           const tokenUserData = res[0].data;
           const dataUser = res[0].data[0];
-          console.log('tokenUserData: ', tokenUserData);
+          // console.log('tokenUserData: ', tokenUserData);
           setToken(tokenUserData);
           addCurrentUser(dataUser);
         });
@@ -153,7 +153,7 @@ const Header = () => {
                 <SignUpButton
                   className="signUp-btn"
                   onClick={() => {
-                    console.log('clicked');
+                    // console.log('clicked');
                     toggleClick();
                   }}
                   width={'200px'}

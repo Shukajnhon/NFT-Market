@@ -353,7 +353,7 @@ const ProfileDetail = () => {
     username: '',
     bio: '',
     email: '',
-    profile_image: document.getElementById('profile_image'),
+    profile_image: '',
     profile_background_image: document.getElementById(
       'profile_background_image'
     ),
@@ -369,13 +369,14 @@ const ProfileDetail = () => {
     const FormData = require('form-data');
     e.preventDefault();
     console.log(formValue);
+    const url = `https://drive.google.com/uc?export=view&id=1ZW1ypzRmNFWuyPdY6VMQqkQCMM-JfZVS`;
     const formData = new FormData();
     formData.append('address_wallet', formValue.address_wallet);
     formData.append('username', formValue.username);
     formData.append('bio', formValue.bio);
     formData.append('email', formValue.email);
     formData.append('price', formValue.price);
-    formData.append('image', formValue.profile_image);
+    formData.append('image', url);
     formData.append('background', formValue.profile_background_image);
     console.log('formData:', formData.get('email'));
 
